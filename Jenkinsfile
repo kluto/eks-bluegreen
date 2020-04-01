@@ -13,7 +13,7 @@ pipeline {
       steps {
         echo 'Linting HTML'
         sh 'tidy -q -e *.html'
-        echo 'Linting Dockerfiles'
+        echo 'Linting Dockerfile(s)'
         sh '/home/ubuntu/hadolint blue/Dockerfile'
         sh '/home/ubuntu/hadolint green/Dockerfile'
       }
