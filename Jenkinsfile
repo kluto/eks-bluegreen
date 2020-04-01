@@ -1,14 +1,18 @@
 pipeline {
 	agent any
 	stages {
-		stage('Lint HTML') {
+
+		stage('Start build') {
 			steps {
-				sh 'tidy -q -e *.html'
+		    		echo "Check out from version control"
 			}
-		}
-		stage('Lint Dockerfile') {
+	    	}
+		
+		stage('Lint') {
 			steps {
-				echo 'Test commit...'
+				echo 'Linting HTML'
+				sh 'tidy -q -e *.html'
+				echo 'Linting Dockerfile'
 				sh '/home/ubuntu/hadolint Dockerfile'
 			}
 		}				
