@@ -40,7 +40,7 @@ pipeline {
       steps {
         withAWS(region:'us-west-2', credentials:'aws_pipeline') {
           sh 'kubectl config view'
-          sh 'aws eks --region us-west-2 update-kubeconfig --name big-cheese'
+          sh 'sudo kubectl config use-context arn:aws:eks:us-west-2:966717982209:cluster/big-cheese'
           
   }
       }
