@@ -39,7 +39,7 @@ pipeline {
       steps {
         withAWS(region:'us-east-1', credentials:'AWSCredentials') {
           sh 'kubectl config view'
-          sh 'kubectl config use-context arn:aws:eks:us-east-1:124880580859:cluster/duckhunt'
+          sh 'kubectl config use-context arn:aws:eks:us-west-2:966717982209:cluster/big-cheese'
       }
     }    
     
