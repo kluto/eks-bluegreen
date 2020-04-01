@@ -8,7 +8,7 @@ pipeline {
 		}
 		stage('Lint Dockerfile') {
 			steps {
-				sh '/bin/hadolint Dockerfile'
+				sh 'hadolint Dockerfile'
 			}
 		}				
 
