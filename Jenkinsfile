@@ -17,16 +17,21 @@ pipeline {
 			}
 		}				
 
-		stage('Build Docker Image') {
+		stage('Docker') {
    			steps {
     			withCredentials([[$class: 'UsernamePasswordMultiBinding', 
 					  credentialsId: 'dockerhub', 
 					  usernameVariable: 'DOCKER_USERNAME', 
 					  passwordVariable: 'DOCKER_PASSWORD']]){
-                        sh '''
-                            docker build -t revtec/cloudcap:$BUILD_ID .
-                        '''    
+                    echo 'Build image'
+                    sh 'docker build -t revtec/cloudcap:$BUILD_ID .'    
+                    echo 'Push to dockerhub'
+                    sh 'docker push revtec/cloudcap:$BUILD_ID'
+                    echo 'Clean up...'
+                    sh 'docker rmi revtec/cloudcap:$BUILD_ID'
                 }
+                
+                
             }
   		}	
 
