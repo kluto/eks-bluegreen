@@ -26,6 +26,7 @@ pipeline {
                     echo 'Build image'
                     sh 'docker build -t revtec/cloudcap:$BUILD_ID .'    
                     echo 'Push to dockerhub'
+		    sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'	
                     sh 'docker push revtec/cloudcap:$BUILD_ID'
                     echo 'Clean up...'
                     sh 'docker rmi revtec/cloudcap:$BUILD_ID'
