@@ -6,7 +6,7 @@ pipeline {
 			steps {
 		    		echo "Check out from version control"
 			}
-	    	}
+	    }
 		
 		stage('Lint') {
 			steps {
@@ -17,7 +17,15 @@ pipeline {
 			}
 		}				
 
-
+		stage('Build Docker Image') {
+   			steps {
+    			withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]){
+					sh '''
+      			        docker build -t revtec/cloudcap:$BUILD_ID .
+     			    '''    
+                }
+            }
+  		}	
 
 
 	}
