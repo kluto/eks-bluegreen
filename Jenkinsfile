@@ -8,6 +8,7 @@ pipeline {
 		}
 		stage('Lint Dockerfile') {
 			steps {
+				echo 'Test commit...'
 				sh '/home/ubuntu/hadolint Dockerfile'
 			}
 		}				
