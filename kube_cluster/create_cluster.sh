@@ -4,5 +4,5 @@ eksctl create cluster \
 --kubeconfig=/var/lib/jenkins/.kube/config \
 --nodes=2 \
 --node-type= t2.micro \
---nodes-min=2 \
+--nodes-min=1 \
 --nodes-max=5
