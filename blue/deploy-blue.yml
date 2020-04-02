@@ -2,11 +2,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: blue
-  labels:
-    app: blue
 spec:
   selector:
-    app: blue
+    matchLabels:
+      app: blue
   template:
     metadata:
       labels:
