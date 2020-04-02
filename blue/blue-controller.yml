@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: blue
-          image: revtec/blueimage:$BUILD_ID
+          image: revtec/blueimage:latest
           ports:
             - name: http-server
               containerPort: 80

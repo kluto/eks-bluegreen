@@ -19,14 +19,13 @@ pipeline {
       }
     }				
 
-    stage('Docker') {
+    stage('Docker blue container') {
       steps {
         withCredentials([[$class: 'UsernamePasswordMultiBinding', 
           credentialsId: 'dockerhub', 
           usernameVariable: 'DOCKER_USERNAME', 
           passwordVariable: 'DOCKER_PASSWORD']]){
           echo 'Build image'
-          // sh 'docker build -f blue/Dockerfile -t revtec/blueimage:$BUILD_ID .'    
           sh 'docker build -f blue/Dockerfile -t revtec/blueimage:latest .'    
           echo 'Push to dockerhub'
           sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'	
@@ -36,7 +35,24 @@ pipeline {
         }         
       }
     }	
-    
+
+    stage('Docker green container') {
+      steps {
+        withCredentials([[$class: 'UsernamePasswordMultiBinding', 
+          credentialsId: 'dockerhub', 
+          usernameVariable: 'DOCKER_USERNAME', 
+          passwordVariable: 'DOCKER_PASSWORD']]){
+          echo 'Build image'
+          sh 'docker build -f green/Dockerfile -t revtec/greenimage:latest .'    
+          echo 'Push to dockerhub'
+          sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'	
+          sh 'docker push revtec/greenimage:latest'
+          echo 'Clean up...'
+          sh 'docker rmi revtec/greenimage:latest'
+        }         
+      }
+    }
+
     stage('Set kubectl context') {
       steps {
         withAWS(region:'us-west-2', credentials:'aws_pipeline') {
@@ -49,7 +65,6 @@ pipeline {
     stage('Blue deployment') {
       steps {
         withAWS(region:'us-west-2', credentials:'aws_pipeline') {
-          // sh 'kubectl apply -f blue/blue-controller.yml'
           sh 'kubectl apply -f blue/deploy-blue.yml'
         }
       }
