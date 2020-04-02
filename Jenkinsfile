@@ -36,7 +36,7 @@ pipeline {
       }
     }	
     
-    stage('Set current kubectl context') {
+    stage('Set kubectl context') {
       steps {
         withAWS(region:'us-west-2', credentials:'aws_pipeline') {
           sh 'kubectl config view'
@@ -45,10 +45,11 @@ pipeline {
       }
     }    
 
-    stage('Blue replication controller') {
+    stage('Blue deployment') {
       steps {
         withAWS(region:'us-west-2', credentials:'aws_pipeline') {
-          sh 'kubectl apply -f blue/blue-controller.yml'
+          // sh 'kubectl apply -f blue/blue-controller.yml'
+          sh 'kubectl apply -f blue/deploy-blue.yml'
         }
       }
     }     
