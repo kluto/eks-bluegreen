@@ -41,11 +41,26 @@ pipeline {
         withAWS(region:'us-west-2', credentials:'aws_pipeline') {
           sh 'kubectl config view'
           sh 'kubectl config use-context arn:aws:eks:us-west-2:966717982209:cluster/big-cheese'
-          sh 'kubectl apply -f blue/blue-controller.yml'
         }
       }
     }    
-    
+
+    stage('Blue replication controller') {
+      steps {
+        withAWS(region:'us-west-2', credentials:'aws_pipeline') {
+          sh 'kubectl apply -f blue/blue-controller.yml'
+        }
+      }
+    }     
+
+    stage('Direct to colour') {
+      steps {
+        withAWS(region:'us-west-2', credentials:'aws_pipeline') {
+          sh 'kubectl apply -f bluegreen-service.yml'
+        }
+      }
+    }   
+
 
 
   }
