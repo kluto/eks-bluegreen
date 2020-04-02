@@ -26,12 +26,13 @@ pipeline {
           usernameVariable: 'DOCKER_USERNAME', 
           passwordVariable: 'DOCKER_PASSWORD']]){
           echo 'Build image'
-          sh 'docker build -f blue/Dockerfile -t revtec/blueimage:$BUILD_ID .'    
+          // sh 'docker build -f blue/Dockerfile -t revtec/blueimage:$BUILD_ID .'    
+          sh 'docker build -f blue/Dockerfile -t revtec/blueimage:latest .'    
           echo 'Push to dockerhub'
           sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'	
-          sh 'docker push revtec/blueimage:$BUILD_ID'
+          sh 'docker push revtec/blueimage:latest'
           echo 'Clean up...'
-          sh 'docker rmi revtec/blueimage:$BUILD_ID'
+          sh 'docker rmi revtec/blueimage:latest'
         }         
       }
     }	
