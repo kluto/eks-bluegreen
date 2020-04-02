@@ -68,7 +68,16 @@ pipeline {
           sh 'kubectl apply -f blue/deploy-blue.yml'
         }
       }
+    }
+
+    stage('Green deployment') {
+      steps {
+        withAWS(region:'us-west-2', credentials:'aws_pipeline') {
+          sh 'kubectl apply -f green/deploy-green.yml'
+        }
+      }
     }     
+
 
     stage('Direct to colour') {
       steps {
