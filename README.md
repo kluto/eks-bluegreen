@@ -8,6 +8,6 @@ Pipeline
  - load balancers directs traffic to one version only
  
 The EKS clusters are provisioned by CloudFormation via eksctl, the official CLI for Amazon EKS.
-*Note that* `eksctl delete cluster` *deletes resources but not the CloudFormation stacks*
+*Note that if a build fails (bad IAM congfig, etc) the CloudFormation stack needs to be deleted separately, just like with standalone CF scripts.*
 
 Jenkins is used for the automation server.
